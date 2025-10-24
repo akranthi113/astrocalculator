@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astro Age Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: 500;
+      color: #555;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      background-color: #f9f9f9;
+      transition: border-color 0.3s;
+    }
+
+    select:focus, input:focus {
+      border-color: #0078d7;
+      outline: none;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #0078d7;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 15px;
+      background: #f0f8ff;
+      border-left: 4px solid #0078d7;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .result strong {
+      display: inline-block;
+      width: 120px;
+      color: #0078d7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Astrological Age Calculator</h2>
+
+    <label for="ascendant">Select Ascendant (Lagna):</label>
+    <select id="ascendant">
+      <option>Aries</option>
+      <option>Taurus</option>
+      <option>Gemini</option>
+      <option>Cancer</option>
+      <option>Leo</option>
+      <option>Virgo</option>
+      <option>Libra</option>
+      <option>Scorpio</option>
+      <option>Sagittarius</option>
+      <option>Capricorn</option>
+      <option>Aquarius</option>
+      <option>Pisces</option>
+    </select>
+
+    <label for="age">Enter Age:</label>
+    <input type="number" id="age" value="0" min="0" />
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result">
+      <strong>House:</strong> <span id="house">-</span><br />
+      <strong>Zodiac Sign:</strong> <span id="sign">-</span>
+    </div>
+  </div>
+
+  <script>
+    const zodiac = [
+      "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+      "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+    ];
+
+    function calculate() {
+      const asc = document.getElementById("ascendant").value;
+      const age = parseInt(document.getElementById("age").value);
+
+      const ascNum = zodiac.indexOf(asc) + 1;
+      const houseNum = (age % 12) + 1;
+      const signNum = ((ascNum + houseNum - 2) % 12) + 1;
+      const signName = zodiac[signNum - 1];
+
+      document.getElementById("house").innerText = houseNum;
+      document.getElementById("sign").innerText = signName;
+    }
+  </script>
+</body>
+</html>
