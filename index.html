@@ -109,6 +109,12 @@
     <label for="age">Enter Age:</label>
     <input type="number" id="age" value="0" min="0" />
 
+    <label for="countStart">House Counting Starts From:</label>
+    <select id="countStart">
+      <option value="1" selected>1</option>
+      <option value="0">0</option>
+    </select>
+
     <button onclick="calculate()">Calculate</button>
 
     <div class="result" id="result">
@@ -126,11 +132,17 @@
     function calculate() {
       const asc = document.getElementById("ascendant").value;
       const age = parseInt(document.getElementById("age").value);
+      const countStart = parseInt(document.getElementById("countStart").value);
 
-      const ascNum = zodiac.indexOf(asc) + 1;
-      const houseNum = (age % 12) + 1;
-      const signNum = ((ascNum + houseNum - 2) % 12) + 1;
-      const signName = zodiac[signNum - 1];
+      const ascNum = zodiac.indexOf(asc); // 0-indexed
+
+      // Correct house calculation
+      let houseNum = (age + countStart) % 12;
+      if (houseNum === 0) houseNum = 12; // ensure house is 1-12
+
+      // Correct zodiac/sign calculation
+      const signIndex = (ascNum + houseNum - 1) % 12;
+      const signName = zodiac[signIndex];
 
       document.getElementById("house").innerText = houseNum;
       document.getElementById("sign").innerText = signName;
